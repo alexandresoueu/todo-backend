@@ -14,6 +14,8 @@ class Todo extends Component {
 
     this.onHandleChange = this.onHandleChange.bind(this)
     this.onHandleAdd = this.onHandleAdd.bind(this)
+    this.onHandleSearch = this.onHandleSearch.bind(this)
+    this.onHandleClear = this.onHandleClear.bind(this)
 
     this.onHandleRemove = this.onHandleRemove.bind(this)
     this.onHandleMarkAsDone = this.onHandleMarkAsDone.bind(this)
@@ -31,7 +33,7 @@ class Todo extends Component {
 
   onHandleRemove (item) {
     axios.delete(`${URL}/${item._id}`)
-      .then(resp => this.onRefresh())
+      .then(resp => this.onRefresh(this.state.description))
   }
 
   onHandleChange (event) {
@@ -40,24 +42,39 @@ class Todo extends Component {
 
   onHandleMarkAsDone (item) {
     axios.put(`${URL}/${item._id}`, { ...item, done: true })
-      .then(resp => this.onRefresh())
+      .then(resp => this.onRefresh(this.state.description))
   }
 
   onHandleMarkAsPending (item) {
     axios.put(`${URL}/${item._id}`, { ...item, done: false })
-      .then(resp => this.onRefresh())
+      .then(resp => this.onRefresh(this.state.description))
   }
 
-  onRefresh () {
-    axios.get(`${URL}?sort=-createdAt`)
-      .then(resp => this.setState({ ...this.state, description: '', list: resp.data }))
+  onRefresh (description = '') {
+    const search = description ? `&description__regex=/${description}/` : ''
+    axios.get(`${URL}?sort=-createdAt${search}`)
+      .then(resp => this.setState({ ...this.state, description, list: resp.data }))
+  }
+
+  onHandleSearch () {
+    this.onRefresh(this.state.description)
+  }
+
+  onHandleClear () {
+    this.onRefresh()
   }
 
   render () {
     return (
       <div>
         <PageHeader name='Tasks' small='Register' />
-        <TodoForm description={this.state.description} handleChange={this.onHandleChange} handleAdd={this.onHandleAdd} />
+        <TodoForm
+          description={this.state.description}
+          handleChange={this.onHandleChange}
+          handleSearch={this.onHandleSearch}
+          handleClear={this.onHandleClear}
+          handleAdd={this.onHandleAdd}
+        />
         <TodoList
           list={this.state.list}
           handleRemove={this.onHandleRemove}

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
   todo: () => ({
-    description: 'NEMO',
+    description: 'add your task here',
     list: [{
       _id: 1,
       description: 'Pagar fatura',

@@ -9,12 +9,12 @@ const rootReducer = combineReducers({
       done: true
     },
     {
-      _id: 1,
+      _id: 2,
       description: 'Pagar Amigos',
       done: false
     },
     {
-      _id: 1,
+      _id: 3,
       description: 'Pagar CONTAS',
       done: true
     }]

@@ -23,6 +23,8 @@ export default (state = INITIAL_STATE, action) => {
         description: '',
       }
     
+    
+    
     default:
       return state
   }

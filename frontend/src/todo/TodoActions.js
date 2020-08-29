@@ -27,8 +27,34 @@ const addTask = (description) => {
   }
 }
 
+const markAsDone = item => {
+  return dispatch => {
+    axios.put(`${URL}/${item._id}`, { ...item, done: true })
+      .then(response => dispatch({ type: 'TODO_MARKED_AS_DONE', payload: response.data }))
+      .then(response => dispatch(search()))
+  }
+}
+
+const markAsPending = item => {
+  return dispatch => {
+    axios.put(`${URL}/${item._id}`, { ...item, done: false })
+      .then(response => dispatch({ type: 'TODO_MARKED_AS_PENDING', payload: response.data }))
+      .then(response => dispatch(search()))
+  }
+}
+
+const removeItemList = item => {
+  return dispatch => {
+    axios.delete(`${URL}/${item._id}`)
+      .then(response => dispatch(search()))
+  }
+}
+
 export {
   changeDescription,
   search,
-  addTask
+  addTask,
+  markAsDone,
+  markAsPending,
+  removeItemList,
 }

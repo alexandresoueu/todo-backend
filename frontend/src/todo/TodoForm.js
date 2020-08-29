@@ -9,6 +9,7 @@ import { changeDescription, search } from './TodoActions'
 class TodoForm extends Component {
   constructor(props) {
     super(props)
+    
     this.keyHandler = this.keyHandler.bind(this)
   }
 

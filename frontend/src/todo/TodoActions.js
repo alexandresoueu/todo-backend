@@ -12,13 +12,26 @@ const changeDescription = event => (
 const search = () => {
   const request = axios.get(`${URL}?sort=-createdAt`)
 
-  return{
+  return {
     type: 'TODO_SEARCHED',
     payload: request
   }
 }
 
+const addTask = (description) => {
+  const request = axios.post(URL, { description })
+
+  return [
+    {
+      type: 'TODO_ADDED',
+      payload: request
+    },
+    search()
+  ]
+}
+
 export {
   changeDescription,
-  search
+  search,
+  addTask
 }

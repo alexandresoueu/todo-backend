@@ -17,13 +17,11 @@ export default (state = INITIAL_STATE, action) => {
         list: action.payload.data,
       }
 
-    case 'TODO_ADDED':
+    case 'TODO_CLEAR':
       return {
         ...state,
         description: '',
       }
-    
-    
     
     default:
       return state

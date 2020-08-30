@@ -18,11 +18,11 @@ const search = () => {
   }
 }
 
-const addTask = (description) => {
+const addTask = description => {
 
   return dispatch => {
     axios.post(URL, { description })
-      .then(response => dispatch({ type: 'TODO_ADDED', payload: response.data}))
+      .then(response => dispatch(clear()))
       .then(response => dispatch(search()))
   }
 }
@@ -50,6 +50,10 @@ const removeItemList = item => {
   }
 }
 
+const clear = () => {
+  return { type: 'TODO_CLEAR' }
+}
+
 export {
   changeDescription,
   search,
@@ -57,4 +61,5 @@ export {
   markAsDone,
   markAsPending,
   removeItemList,
+  clear,
 }
